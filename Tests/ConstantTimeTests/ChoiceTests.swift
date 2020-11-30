@@ -3,11 +3,6 @@ import ConstantTime
 
 fileprivate typealias UIntX = UInt8
 
-fileprivate extension Choice {
-    static var `true`:  Self { Choice(unsafeRawValue: 0x01) }
-    static var `false`: Self { Choice(unsafeRawValue: 0x00) }
-}
-
 fileprivate final class ChoiceTests: XCTestCase {
     func testLogicalNOT() {
         XCTAssertEqual(Bool(!Choice.true), false)

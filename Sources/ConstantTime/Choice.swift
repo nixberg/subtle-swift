@@ -1,4 +1,7 @@
 public struct Choice {
+    public static let `true`  = Choice(unsafeRawValue: 0x01)
+    public static let `false` = Choice(unsafeRawValue: 0x00)
+    
     fileprivate let rawValue: UInt8
     
     public init(_ source: Self) {
