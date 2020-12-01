@@ -3,11 +3,9 @@
 public extension Array where Element: FixedWidthInteger & UnsignedInteger {
     @inline(never)
     mutating func sortInConstantTime() {
-        guard count > 1 else {
+        guard let top = sequence(first: 1) { 2 * $0 }.prefix(while: { $0 < count }).last else {
             return
         }
-        
-        let top = sequence(first: 1) { 2 * $0}.prefix { $0 < count}.last!
         
         sequence(first: top) { $0 >> 1 }.prefix { $0 > 0 }.forEach { p in
             for i in 0..<(count - p) where (i & p) == 0 {
