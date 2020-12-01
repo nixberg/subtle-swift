@@ -12,9 +12,7 @@ public extension Array where Element: FixedWidthInteger & UnsignedInteger {
                 self.minmaxAt(i, i + p)
             }
             
-            var offset = 0
-            
-            sequence(first: top) { $0 >> 1 }.prefix { $0 > p }.forEach { q in
+            _ = sequence(first: top) { $0 >> 1 }.prefix { $0 > p }.reduce(into: 0) { offset, q in
                 for i in offset..<(count - q) where i & p == 0 {
                     self[i + p] = sequence(first: q) {
                         $0 >> 1
