@@ -3,7 +3,7 @@ import ConstantTime
 
 fileprivate typealias UIntX = UInt8
 
-fileprivate final class SortTests: XCTestCase {
+final class SortTests: XCTestCase {
     func testSort() {
         for count in 0..<256 {
             var rng = SystemRandomNumberGenerator()

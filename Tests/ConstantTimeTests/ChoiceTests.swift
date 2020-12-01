@@ -3,7 +3,7 @@ import ConstantTime
 
 fileprivate typealias UIntX = UInt8
 
-fileprivate final class ChoiceTests: XCTestCase {
+final class ChoiceTests: XCTestCase {
     func testLogicalNOT() {
         XCTAssertEqual(Bool(!Choice.true), false)
         XCTAssertEqual(Bool(!Choice.false), true)

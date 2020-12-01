@@ -8,25 +8,23 @@ public extension Array where Element: FixedWidthInteger & UnsignedInteger {
         }
         
         sequence(first: top) { $0 >> 1 }.prefix { $0 > 0 }.forEach { p in
-            for i in 0..<(count - p) where (i & p) == 0 {
+            for i in 0..<(count - p) where i & p == 0 {
                 self.minmaxAt(i, i + p)
             }
             
-            var i = 0
+            var offset = 0
             
             sequence(first: top) { $0 >> 1 }.prefix { $0 > p }.forEach { q in
-                while i < count - q {
-                    if (i & p) == 0 {
-                        self[i + p] = sequence(first: q) {
-                            $0 >> 1
-                        }.prefix {
-                            $0 > p
-                        }.reduce(into: self[i + p]) { (a, r) in
-                            minmax(&a, &self[i + r])
-                        }
+                for i in offset..<(count - q) where i & p == 0 {
+                    self[i + p] = sequence(first: q) {
+                        $0 >> 1
+                    }.prefix {
+                        $0 > p
+                    }.reduce(into: self[i + p]) { (a, r) in
+                        minmax(&a, &self[i + r])
                     }
-                    i += 1
                 }
+                offset = count - q
             }
         }
     }
