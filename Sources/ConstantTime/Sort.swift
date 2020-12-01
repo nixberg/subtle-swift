@@ -12,37 +12,35 @@ public extension Array where Element: FixedWidthInteger & UnsignedInteger {
                 self.minmaxAt(i, i + p)
             }
             
-            _ = sequence(first: top) { $0 >> 1 }.prefix { $0 > p }.reduce(into: 0) { offset, q in
+            _ = sequence(first: top) { $0 >> 1 }.prefix { $0 > p }.reduce(0) { offset, q in
                 for i in offset..<(count - q) where i & p == 0 {
                     self[i + p] = sequence(first: q) {
                         $0 >> 1
                     }.prefix {
                         $0 > p
-                    }.reduce(into: self[i + p]) { (a, r) in
-                        minmax(&a, &self[i + r])
+                    }.reduce(self[i + p]) { (a, r) in
+                        self.minmax(a, i + r)
                     }
                 }
-                offset = count - q
+                return count - q
             }
         }
     }
-}
-
-fileprivate extension Array where Element: FixedWidthInteger & UnsignedInteger {
+    
     @inline(__always)
-    mutating func minmaxAt(_ i: Int, _ j: Int) {
+    private mutating func minmaxAt(_ i: Index, _ j: Index) {
         let a = self[i]
         let b = self[j]
         let swapOperator = (a ^ b) & Element(maskFrom: a > b)
         self[i] = a ^ swapOperator
         self[j] = b ^ swapOperator
     }
-}
-
-@inline(__always)
-fileprivate func minmax<T>(_ a: inout T, _ b: inout T)
-where T: FixedWidthInteger & UnsignedInteger {
-    let swapOperator = (a ^ b) & T(maskFrom: a > b)
-    a ^= swapOperator
-    b ^= swapOperator
+    
+    @inline(__always)
+    private mutating func minmax(_ a: Element, _ j: Index) -> Element {
+        let b = self[j]
+        let swapOperator = (a ^ b) & Element(maskFrom: a > b)
+        self[j] = b ^ swapOperator
+        return a ^ swapOperator
+    }
 }
