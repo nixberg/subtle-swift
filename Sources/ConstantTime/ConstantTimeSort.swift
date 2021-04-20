@@ -1,7 +1,10 @@
-// Adapted from https://sorting.cr.yp.to
-
-public extension Array where Element: FixedWidthInteger & UnsignedInteger {
-    @inline(never)
+public extension MutableCollection
+where
+    Self: RandomAccessCollection,
+    Element: ConstantTimeGreaterThan & ConstantTimeReplaceable,
+    Index == Int
+{
+    @inline(__always)
     mutating func sortInConstantTime() {
         guard let top = sequence(first: 1) { 2 * $0 }.prefix(while: { $0 < count }).last else {
             return
@@ -29,18 +32,33 @@ public extension Array where Element: FixedWidthInteger & UnsignedInteger {
     
     @inline(__always)
     private mutating func minmaxAt(_ i: Index, _ j: Index) {
-        let a = self[i]
-        let b = self[j]
-        let swapOperator = (a ^ b) & Element(maskFrom: a > b)
-        self[i] = a ^ swapOperator
-        self[j] = b ^ swapOperator
+        var a = self[i]
+        var b = self[j]
+        a.swap(with: &b, if: a > b)
+        self[i] = a
+        self[j] = b
     }
     
     @inline(__always)
     private mutating func minmax(_ a: Element, _ j: Index) -> Element {
-        let b = self[j]
-        let swapOperator = (a ^ b) & Element(maskFrom: a > b)
-        self[j] = b ^ swapOperator
-        return a ^ swapOperator
+        var a = a
+        var b = self[j]
+        a.swap(with: &b, if: a > b)
+        self[j] = b
+        return a
+    }
+}
+
+public extension RangeReplaceableCollection
+where
+    Self: MutableCollection & RandomAccessCollection,
+    Element: ConstantTimeGreaterThan & ConstantTimeReplaceable,
+    Index == Int
+{
+    @inline(__always)
+    func sortedInConstantTime() -> Self {
+        var copy = Self(self)
+        copy.sortInConstantTime()
+        return copy
     }
 }

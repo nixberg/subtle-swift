@@ -1,8 +1,16 @@
-import XCTest
 import ConstantTime
+import XCTest
 
 final class SortTests: XCTestCase {
     let elementCountRange = 0...128
+    
+    func testSortUInt() {
+        for count in elementCountRange {
+            var rng = SystemRandomNumberGenerator()
+            let array: [UInt] = (0..<count).map { _ in rng.next() }
+            XCTAssertEqual(array.sortedInConstantTime(), array.sorted())
+        }
+    }
     
     func testSortUInt8() {
         for count in elementCountRange {
@@ -34,13 +42,5 @@ final class SortTests: XCTestCase {
             let array: [UInt64] = (0..<count).map { _ in rng.next() }
             XCTAssertEqual(array.sortedInConstantTime(), array.sorted())
         }
-    }
-}
-
-fileprivate extension Array where Element: FixedWidthInteger & UnsignedInteger {
-    func sortedInConstantTime() -> Self {
-        var copy = Self(self)
-        copy.sortInConstantTime()
-        return copy
     }
 }
