@@ -26,3 +26,11 @@ extension UInt8:  ConstantTimeEquatable {}
 extension UInt16: ConstantTimeEquatable {}
 extension UInt32: ConstantTimeEquatable {}
 extension UInt64: ConstantTimeEquatable {}
+
+extension Collection where Element: ConstantTimeEquatable {
+    @inline(__always)
+    public static func == (lhs: Self, rhs: Self) -> Choice {
+        precondition(lhs.count == rhs.count)
+        return zip(lhs, rhs).map(==).reduce(.true, &&)
+    }
+}
