@@ -73,3 +73,13 @@ extension UInt64: ConstantTimeReplaceable {
         self._swapped(with: other, if: choice)
     }
 }
+
+extension MutableCollection where Element: ConstantTimeReplaceable {
+    @inline(__always)
+    mutating func replace(with other: Self, if choice: Choice) {
+        precondition(count == other.count)
+        for (i, element) in zip(indices, other) {
+            self[i].replace(with: element, if: choice)
+        }
+    }
+}
