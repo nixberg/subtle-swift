@@ -14,6 +14,22 @@ final class ChoiceTests: XCTestCase {
         XCTAssertEqual(Bool(Choice.true  && .false), false)
         XCTAssertEqual(Bool(Choice.false && .true ), false)
         XCTAssertEqual(Bool(Choice.false && .false), false)
+        
+        var a: Choice = .true
+        a &&= .true
+        XCTAssertEqual(Bool(a), true)
+        
+        var b: Choice = .true
+        b &&= .false
+        XCTAssertEqual(Bool(b), false)
+        
+        var c: Choice = .false
+        c &&= .true
+        XCTAssertEqual(Bool(c), false)
+        
+        var d: Choice = .false
+        d &&= .false
+        XCTAssertEqual(Bool(d), false)
     }
     
     func testLogicalOR() {
@@ -21,6 +37,22 @@ final class ChoiceTests: XCTestCase {
         XCTAssertEqual(Bool(Choice.true  || .false), true)
         XCTAssertEqual(Bool(Choice.false || .true ), true)
         XCTAssertEqual(Bool(Choice.false || .false), false)
+        
+        var a: Choice = .true
+        a ||= .true
+        XCTAssertEqual(Bool(a), true)
+        
+        var b: Choice = .true
+        b ||= .false
+        XCTAssertEqual(Bool(b), true)
+        
+        var c: Choice = .false
+        c ||= .true
+        XCTAssertEqual(Bool(c), true)
+        
+        var d: Choice = .false
+        d ||= .false
+        XCTAssertEqual(Bool(d), false)
     }
     
     func testMaskFrom() {

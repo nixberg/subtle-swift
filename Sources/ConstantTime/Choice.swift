@@ -1,3 +1,6 @@
+infix operator &&=: AssignmentPrecedence
+infix operator ||=: AssignmentPrecedence
+
 public struct Choice {
     public static let `true`  = Choice(uncheckedRawValue: 0b1)
     public static let `false` = Choice(uncheckedRawValue: 0b0)
@@ -26,8 +29,18 @@ public struct Choice {
     }
     
     @inline(__always)
+    public static func &&= (lhs: inout Self, rhs: Self) {
+        lhs = lhs && rhs
+    }
+    
+    @inline(__always)
     public static func || (lhs: Self, rhs: Self) -> Self {
         Self(uncheckedRawValue: lhs.rawValue | rhs.rawValue)
+    }
+    
+    @inline(__always)
+    public static func ||= (lhs: inout Self, rhs: Self) {
+        lhs = lhs || rhs
     }
 }
 
@@ -44,3 +57,4 @@ extension FixedWidthInteger where Self: UnsignedInteger {
         self = 0 &- Self(truncatingIfNeeded: choice.rawValue)
     }
 }
+
