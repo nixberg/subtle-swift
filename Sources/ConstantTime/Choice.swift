@@ -5,7 +5,7 @@ public struct Choice {
     public static let `true`  = Choice(uncheckedRawValue: 0b1)
     public static let `false` = Choice(uncheckedRawValue: 0b0)
     
-    fileprivate let rawValue: UInt8
+    public let rawValue: UInt8
     
     @inline(__always)
     public init(_ source: Self) {
