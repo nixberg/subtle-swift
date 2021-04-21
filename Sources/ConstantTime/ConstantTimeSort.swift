@@ -1,7 +1,7 @@
 public extension MutableCollection
 where
     Self: RandomAccessCollection,
-    Element: ConstantTimeGreaterThan & ConstantTimeReplaceable,
+    Element: ConstantTimeGreaterThan & ConditionallyReplaceable,
     Index == Int
 {
     @inline(__always)
@@ -52,7 +52,7 @@ where
 public extension RangeReplaceableCollection
 where
     Self: MutableCollection & RandomAccessCollection,
-    Element: ConstantTimeGreaterThan & ConstantTimeReplaceable,
+    Element: ConstantTimeGreaterThan & ConditionallyReplaceable,
     Index == Int
 {
     @inline(__always)

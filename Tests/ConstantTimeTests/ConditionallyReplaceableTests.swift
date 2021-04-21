@@ -3,7 +3,7 @@ import XCTest
 
 fileprivate typealias UIntExhaustive = UInt8
 
-final class ConstantTimeReplaceableTests: XCTestCase {
+final class ConditionallyReplaceableTests: XCTestCase {
     func testReplacedExhaustive() {
         for lhs in 0...UIntExhaustive.max {
             for rhs in 0...UIntExhaustive.max {

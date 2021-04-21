@@ -1,4 +1,4 @@
-public protocol ConstantTimeReplaceable {
+public protocol ConditionallyReplaceable {
     func replaced(with other: Self, if choice: Choice) -> Self
     
     mutating func replace(with other: Self, if choice: Choice)
@@ -8,7 +8,7 @@ public protocol ConstantTimeReplaceable {
     mutating func swap(with other: inout Self, if choice: Choice)
 }
 
-public extension ConstantTimeReplaceable {
+public extension ConditionallyReplaceable {
     @inline(__always)
     mutating func replace(with other: Self, if choice: Choice) {
         self = self.replaced(with: other, if: choice)
@@ -39,42 +39,42 @@ public extension FixedWidthInteger where Self: UnsignedInteger {
     }
 }
 
-extension UInt: ConstantTimeReplaceable {
+extension UInt: ConditionallyReplaceable {
     @inline(__always)
     public func swapped(with other: Self, if choice: Choice) -> (Self, Self) {
         self._swapped(with: other, if: choice)
     }
 }
 
-extension UInt8:  ConstantTimeReplaceable {
+extension UInt8: ConditionallyReplaceable {
     @inline(__always)
     public func swapped(with other: Self, if choice: Choice) -> (Self, Self) {
         self._swapped(with: other, if: choice)
     }
 }
 
-extension UInt16: ConstantTimeReplaceable {
+extension UInt16: ConditionallyReplaceable {
     @inline(__always)
     public func swapped(with other: Self, if choice: Choice) -> (Self, Self) {
         self._swapped(with: other, if: choice)
     }
 }
 
-extension UInt32: ConstantTimeReplaceable {
+extension UInt32: ConditionallyReplaceable {
     @inline(__always)
     public func swapped(with other: Self, if choice: Choice) -> (Self, Self) {
         self._swapped(with: other, if: choice)
     }
 }
 
-extension UInt64: ConstantTimeReplaceable {
+extension UInt64: ConditionallyReplaceable {
     @inline(__always)
     public func swapped(with other: Self, if choice: Choice) -> (Self, Self) {
         self._swapped(with: other, if: choice)
     }
 }
 
-extension MutableCollection where Element: ConstantTimeReplaceable {
+extension MutableCollection where Element: ConditionallyReplaceable {
     @inline(__always)
     public mutating func replace(with other: Self, if choice: Choice) {
         precondition(count == other.count)
