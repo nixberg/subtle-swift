@@ -11,6 +11,13 @@ public extension ConstantTimeEquatable {
     }
 }
 
+extension Choice: ConstantTimeEquatable {
+    @inline(__always)
+    public static func == (lhs: Self, rhs: Self) -> Choice {
+        !Self(uncheckedRawValue: lhs.rawValue ^ rhs.rawValue)
+    }
+}
+
 public extension FixedWidthInteger where Self: UnsignedInteger {
     @inline(__always)
     static func == (lhs: Self, rhs: Self) -> Choice {
