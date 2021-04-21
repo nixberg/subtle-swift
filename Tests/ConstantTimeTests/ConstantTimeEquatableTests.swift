@@ -5,10 +5,10 @@ fileprivate typealias UIntExhaustive = UInt8
 
 final class ConstantTimeEquatableTests: XCTestCase {
     func testEqualToChoice() {
-        XCTAssertEqual(Bool(Choice.true == .true), true)
-        XCTAssertEqual(Bool(Choice.true == .false), false)
-        XCTAssertEqual(Bool(Choice.false == .true), false)
-        XCTAssertEqual(Bool(Choice.false == .false), true)
+        XCTAssertEqual(Choice.true  == .true,  .true )
+        XCTAssertEqual(Choice.true  == .false, .false)
+        XCTAssertEqual(Choice.false == .true,  .false)
+        XCTAssertEqual(Choice.false == .false, .true )
     }
     
     func testEqualToUIntExhaustive() {

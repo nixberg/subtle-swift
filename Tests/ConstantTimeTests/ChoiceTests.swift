@@ -3,54 +3,54 @@ import XCTest
 
 final class ChoiceTests: XCTestCase {
     func testLogicalNOT() {
-        XCTAssertEqual(Bool(!Choice.true), false)
-        XCTAssertEqual(Bool(!Choice.false), true)
+        XCTAssertEqual(!Choice.true, .false)
+        XCTAssertEqual(!Choice.false, .true)
     }
     
     func testLogicalAND() {
-        XCTAssertEqual(Bool(Choice.true  && .true ), true)
-        XCTAssertEqual(Bool(Choice.true  && .false), false)
-        XCTAssertEqual(Bool(Choice.false && .true ), false)
-        XCTAssertEqual(Bool(Choice.false && .false), false)
+        XCTAssertEqual(Choice.true  && .true,  .true )
+        XCTAssertEqual(Choice.true  && .false, .false)
+        XCTAssertEqual(Choice.false && .true,  .false)
+        XCTAssertEqual(Choice.false && .false, .false)
         
         var a: Choice = .true
         a &&= .true
-        XCTAssertEqual(Bool(a), true)
+        XCTAssertEqual(a, .true)
         
         var b: Choice = .true
         b &&= .false
-        XCTAssertEqual(Bool(b), false)
+        XCTAssertEqual(b, .false)
         
         var c: Choice = .false
         c &&= .true
-        XCTAssertEqual(Bool(c), false)
+        XCTAssertEqual(c, .false)
         
         var d: Choice = .false
         d &&= .false
-        XCTAssertEqual(Bool(d), false)
+        XCTAssertEqual(d, .false)
     }
     
     func testLogicalOR() {
-        XCTAssertEqual(Bool(Choice.true  || .true ), true)
-        XCTAssertEqual(Bool(Choice.true  || .false), true)
-        XCTAssertEqual(Bool(Choice.false || .true ), true)
-        XCTAssertEqual(Bool(Choice.false || .false), false)
+        XCTAssertEqual(Choice.true  || .true,  .true )
+        XCTAssertEqual(Choice.true  || .false, .true )
+        XCTAssertEqual(Choice.false || .true,  .true )
+        XCTAssertEqual(Choice.false || .false, .false)
         
         var a: Choice = .true
         a ||= .true
-        XCTAssertEqual(Bool(a), true)
+        XCTAssertEqual(a, .true)
         
         var b: Choice = .true
         b ||= .false
-        XCTAssertEqual(Bool(b), true)
+        XCTAssertEqual(b, .true)
         
         var c: Choice = .false
         c ||= .true
-        XCTAssertEqual(Bool(c), true)
+        XCTAssertEqual(c, .true)
         
         var d: Choice = .false
         d ||= .false
-        XCTAssertEqual(Bool(d), false)
+        XCTAssertEqual(d, .false)
     }
     
     func testMaskFrom() {
@@ -68,5 +68,11 @@ final class ChoiceTests: XCTestCase {
         
         XCTAssertEqual(UInt64(maskFrom: .true ), .max)
         XCTAssertEqual(UInt64(maskFrom: .false), .min)
+    }
+}
+
+extension Choice: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        Bool(Choice(lhs == rhs))
     }
 }
