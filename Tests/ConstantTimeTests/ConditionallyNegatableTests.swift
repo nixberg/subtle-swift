@@ -1,17 +1,17 @@
-@testable import ConstantTime
+import ConstantTime
 import XCTest
 
 fileprivate typealias UIntExhaustive = UInt8
 
 final class ConditionallyNegatableTests: XCTestCase {
-    func testNegatedExhaustive() {
+    func testNegatedUIntExhaustive() {
         for value in 0...UIntExhaustive.max {
             XCTAssertEqual(value.negated(if: .true), 0 &- value)
             XCTAssertEqual(value.negated(if: .false), value)
         }
     }
     
-    func testNegateExhaustive() {
+    func testNegateUIntExhaustive() {
         for value in 0...UIntExhaustive.max {
             var a = value
             a.negate(if: .true)

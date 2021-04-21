@@ -1,10 +1,10 @@
-@testable import ConstantTime
+import ConstantTime
 import XCTest
 
 fileprivate typealias UIntExhaustive = UInt8
 
 final class ConditionallyReplaceableTests: XCTestCase {
-    func testReplacedExhaustive() {
+    func testReplacedUIntExhaustive() {
         for lhs in 0...UIntExhaustive.max {
             for rhs in 0...UIntExhaustive.max {
                 XCTAssertEqual(lhs.replaced(with: rhs, if: .false), lhs)
@@ -13,7 +13,7 @@ final class ConditionallyReplaceableTests: XCTestCase {
         }
     }
     
-    func testReplaceExhaustive() {
+    func testReplaceUIntExhaustive() {
         for lhs in 0...UIntExhaustive.max {
             for rhs in 0...UIntExhaustive.max {
                 var a = lhs
@@ -27,7 +27,7 @@ final class ConditionallyReplaceableTests: XCTestCase {
         }
     }
     
-    func testSwappedExhaustive() {
+    func testSwappedUIntExhaustive() {
         for lhs in 0...UIntExhaustive.max {
             for rhs in 0...UIntExhaustive.max {
                 let (a, b) = lhs.swapped(with: rhs, if: .false)
@@ -41,7 +41,7 @@ final class ConditionallyReplaceableTests: XCTestCase {
         }
     }
     
-    func testSwapExhaustive() {
+    func testSwapUIntExhaustive() {
         for lhs in 0...UIntExhaustive.max {
             for rhs in 0...UIntExhaustive.max {
                 var (a, b) = (lhs, rhs)

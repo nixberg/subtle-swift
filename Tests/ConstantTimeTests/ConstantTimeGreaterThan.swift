@@ -4,7 +4,7 @@ import XCTest
 fileprivate typealias UIntExhaustive = UInt8
 
 final class ConstantTimeGreaterThanTests: XCTestCase {
-    func testEqualToExhaustive() {
+    func testEqualToUIntExhaustive() {
         for lhs in 0...UIntExhaustive.max {
             for rhs in 0...UIntExhaustive.max {
                 XCTAssertEqual(Bool(Choice(lhs > rhs)), lhs > rhs)
@@ -12,7 +12,7 @@ final class ConstantTimeGreaterThanTests: XCTestCase {
         }
     }
     
-    func testGreaterThanOrEqualToExhaustive() {
+    func testGreaterThanOrEqualToUIntExhaustive() {
         for lhs in 0...UIntExhaustive.max {
             for rhs in 0...UIntExhaustive.max {
                 XCTAssertEqual(Bool(Choice(lhs >= rhs)), lhs >= rhs)

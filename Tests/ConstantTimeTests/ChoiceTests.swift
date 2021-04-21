@@ -1,8 +1,6 @@
 @testable import ConstantTime
 import XCTest
 
-fileprivate typealias UIntX = UInt8
-
 final class ChoiceTests: XCTestCase {
     func testLogicalNOT() {
         XCTAssertEqual(Bool(!Choice.true), false)
