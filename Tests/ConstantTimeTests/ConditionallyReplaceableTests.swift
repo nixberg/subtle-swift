@@ -4,6 +4,18 @@ import XCTest
 fileprivate typealias UIntExhaustive = UInt8
 
 final class ConditionallyReplaceableTests: XCTestCase {
+    func testReplacedChoice() {
+        XCTAssertEqual(Bool(Choice.true.replaced(with: .true, if: .true)), true)
+        XCTAssertEqual(Bool(Choice.true.replaced(with: .true, if: .false)), true)
+        XCTAssertEqual(Bool(Choice.true.replaced(with: .false, if: .true)), false)
+        XCTAssertEqual(Bool(Choice.true.replaced(with: .false, if: .false)), true)
+        
+        XCTAssertEqual(Bool(Choice.false.replaced(with: .true, if: .true)), true)
+        XCTAssertEqual(Bool(Choice.false.replaced(with: .true, if: .false)), false)
+        XCTAssertEqual(Bool(Choice.false.replaced(with: .false, if: .true)), false)
+        XCTAssertEqual(Bool(Choice.false.replaced(with: .false, if: .false)), false)
+    }
+    
     func testReplacedUIntExhaustive() {
         for lhs in 0...UIntExhaustive.max {
             for rhs in 0...UIntExhaustive.max {

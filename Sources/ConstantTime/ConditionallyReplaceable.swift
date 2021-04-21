@@ -25,6 +25,13 @@ public extension ConditionallyReplaceable {
     }
 }
 
+extension Choice: ConditionallyReplaceable {
+    @inline(__always)
+    public func replaced(with other: Choice, if choice: Choice) -> Choice {
+        (self && !choice) || (other && choice)
+    }
+}
+
 public extension FixedWidthInteger where Self: UnsignedInteger {
     @inline(__always)
     func replaced(with other: Self, if choice: Choice) -> Self {
