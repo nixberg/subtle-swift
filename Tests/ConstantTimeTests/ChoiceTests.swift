@@ -70,9 +70,3 @@ final class ChoiceTests: XCTestCase {
         XCTAssertEqual(UInt64(maskFrom: .false), .min)
     }
 }
-
-extension Choice: Equatable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        Bool(Choice(lhs == rhs))
-    }
-}
