@@ -63,3 +63,15 @@ public extension Sequence where Element: ConstantTimeEquatable {
         !(lhs == rhs)
     }
 }
+
+public extension RandomAccessCollection where Element: ConstantTimeEquatable {
+    static func == (lhs: Self, rhs: Self) -> Choice {
+        precondition(lhs.count == rhs.count)
+        return zip(lhs, rhs).map(==).reduce(.true, &&)
+    }
+    
+    @inline(__always)
+    static func != (lhs: Self, rhs: Self) -> Choice {
+        !(lhs == rhs)
+    }
+}

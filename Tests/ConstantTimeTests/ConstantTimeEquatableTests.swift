@@ -40,4 +40,18 @@ final class ConstantTimeEquatableTests: XCTestCase {
         XCTAssertEqual(lhs == rhs, .false)
         XCTAssertEqual(lhs != rhs, .true )
     }
+    
+    func testEqualRandomAccessCollection() {
+        let lhs: [UInt8] = Array(0..<16)
+        let rhs: [UInt8] = Array(0..<16)
+        XCTAssertEqual(lhs == rhs, .true )
+        XCTAssertEqual(lhs != rhs, .false)
+    }
+    
+    func testNotEqualRandomAccessCollection() {
+        let lhs: [UInt8] = Array(0..<16)
+        let rhs: [UInt8] = Array(1..<17)
+        XCTAssertEqual(lhs == rhs, .false)
+        XCTAssertEqual(lhs != rhs, .true )
+    }
 }
