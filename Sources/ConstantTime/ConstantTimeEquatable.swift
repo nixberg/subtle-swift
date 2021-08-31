@@ -37,10 +37,29 @@ extension UInt16: ConstantTimeEquatable {}
 extension UInt32: ConstantTimeEquatable {}
 extension UInt64: ConstantTimeEquatable {}
 
-extension Collection where Element: ConstantTimeEquatable {
+public extension Sequence where Element: ConstantTimeEquatable {
+    static func == (lhs: Self, rhs: Self) -> Choice {
+        var lhs = lhs.makeIterator()
+        var rhs = rhs.makeIterator()
+        
+        var result: Choice = .true
+        
+        while true {
+            switch (lhs.next(), rhs.next()) {
+            case (let lhs?, let rhs?):
+                result &&= lhs == rhs
+            case (.some, .none):
+                preconditionFailure()
+            case (.none, .some):
+                preconditionFailure()
+            case (.none, .none):
+                return result
+            }
+        }
+    }
+    
     @inline(__always)
-    public static func == (lhs: Self, rhs: Self) -> Choice {
-        precondition(lhs.count == rhs.count)
-        return zip(lhs, rhs).map(==).reduce(.true, &&)
+    static func != (lhs: Self, rhs: Self) -> Choice {
+        !(lhs == rhs)
     }
 }

@@ -26,4 +26,18 @@ final class ConstantTimeEquatableTests: XCTestCase {
             }
         }
     }
+    
+    func testEqualSequence() {
+        let lhs: Range<UInt8> = 0..<16
+        let rhs: Range<UInt8> = 0..<16
+        XCTAssertEqual(lhs == rhs, .true )
+        XCTAssertEqual(lhs != rhs, .false)
+    }
+    
+    func testNotEqualSequence() {
+        let lhs: Range<UInt8> = 0..<16
+        let rhs: Range<UInt8> = 1..<17
+        XCTAssertEqual(lhs == rhs, .false)
+        XCTAssertEqual(lhs != rhs, .true )
+    }
 }
