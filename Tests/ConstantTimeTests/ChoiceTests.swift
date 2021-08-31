@@ -3,15 +3,15 @@ import XCTest
 
 final class ChoiceTests: XCTestCase {
     func testLogicalNOT() {
-        XCTAssertEqual(!Choice.true, .false)
-        XCTAssertEqual(!Choice.false, .true)
+        XCTAssertEqual(!.true, .false)
+        XCTAssertEqual(!.false, .true)
     }
     
     func testLogicalAND() {
-        XCTAssertEqual(Choice.true  && .true,  .true )
-        XCTAssertEqual(Choice.true  && .false, .false)
-        XCTAssertEqual(Choice.false && .true,  .false)
-        XCTAssertEqual(Choice.false && .false, .false)
+        XCTAssertEqual(.true  && .true,  .true )
+        XCTAssertEqual(.true  && .false, .false)
+        XCTAssertEqual(.false && .true,  .false)
+        XCTAssertEqual(.false && .false, .false)
         
         var a: Choice = .true
         a &&= .true
@@ -31,10 +31,10 @@ final class ChoiceTests: XCTestCase {
     }
     
     func testLogicalOR() {
-        XCTAssertEqual(Choice.true  || .true,  .true )
-        XCTAssertEqual(Choice.true  || .false, .true )
-        XCTAssertEqual(Choice.false || .true,  .true )
-        XCTAssertEqual(Choice.false || .false, .false)
+        XCTAssertEqual(.true  || .true,  .true )
+        XCTAssertEqual(.true  || .false, .true )
+        XCTAssertEqual(.false || .true,  .true )
+        XCTAssertEqual(.false || .false, .false)
         
         var a: Choice = .true
         a ||= .true
