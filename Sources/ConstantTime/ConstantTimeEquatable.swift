@@ -4,27 +4,30 @@ public protocol ConstantTimeEquatable {
     static func != (lhs: Self, rhs: Self) -> Choice
 }
 
-public extension ConstantTimeEquatable {
-    @inline(__always)
-    static func != (lhs: Self, rhs: Self) -> Choice {
-        !(lhs == rhs)
-    }
-}
-
 extension Choice: ConstantTimeEquatable {
     @inline(__always)
     public static func == (lhs: Self, rhs: Self) -> Choice {
-        !Self(uncheckedRawValue: lhs.rawValue ^ rhs.rawValue)
+        !(lhs != rhs)
+    }
+    
+    @inline(__always)
+    public static func != (lhs: Self, rhs: Self) -> Choice {
+        Self(uncheckedRawValue: lhs.rawValue ^ rhs.rawValue)
     }
 }
 
 public extension FixedWidthInteger where Self: UnsignedInteger {
     @inline(__always)
     static func == (lhs: Self, rhs: Self) -> Choice {
+        !(lhs != rhs)
+    }
+    
+    @inline(__always)
+    static func != (lhs: Self, rhs: Self) -> Choice {
         var result = lhs ^ rhs
         result |= 0 &- result
         result >>= Self.bitWidth - 1
-        return !Choice(uncheckedRawValue: UInt8(truncatingIfNeeded: result))
+        return Choice(uncheckedRawValue: UInt8(truncatingIfNeeded: result))
     }
 }
 
