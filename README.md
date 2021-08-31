@@ -1,6 +1,6 @@
-![Swift](https://github.com/nixberg/constant-time-swift/workflows/Swift/badge.svg)
+![Swift](https://github.com/nixberg/subtle-swift/workflows/Swift/badge.svg)
 
-# constant-time-swift
+# subtle-swift
 
 Experimental, do not use.
 

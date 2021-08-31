@@ -1,4 +1,4 @@
-@testable import ConstantTime
+@testable import Subtle
 import XCTest
 
 final class ChoiceTests: XCTestCase {

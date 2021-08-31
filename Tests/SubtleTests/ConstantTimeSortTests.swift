@@ -1,4 +1,4 @@
-import ConstantTime
+import Subtle
 import XCTest
 
 final class SortTests: XCTestCase {

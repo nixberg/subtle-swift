@@ -1,19 +1,19 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 
 import PackageDescription
 
 let package = Package(
-    name: "constant-time-swift",
+    name: "subtle-swift",
     products: [
         .library(
-            name: "ConstantTime",
-            targets: ["ConstantTime"]),
+            name: "Subtle",
+            targets: ["Subtle"]),
     ],
     targets: [
         .target(
-            name: "ConstantTime"),
+            name: "Subtle"),
         .testTarget(
-            name: "ConstantTimeTests",
-            dependencies: ["ConstantTime"]),
+            name: "SubtleTests",
+            dependencies: ["Subtle"]),
     ]
 )

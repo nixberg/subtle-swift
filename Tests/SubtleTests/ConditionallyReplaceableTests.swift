@@ -1,4 +1,4 @@
-import ConstantTime
+import Subtle
 import XCTest
 
 fileprivate typealias UIntExhaustive = UInt8
