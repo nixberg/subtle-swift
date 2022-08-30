@@ -1,7 +1,7 @@
 import Subtle
 import XCTest
 
-final class SortTests: XCTestCase {
+final class ConstantTimeSortableTests: XCTestCase {
     let elementCountRange = 0...128
     
     func testSortUInt() {

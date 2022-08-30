@@ -1,4 +1,5 @@
-![Swift](https://github.com/nixberg/subtle-swift/workflows/Swift/badge.svg)
+[![Swift](https://github.com/nixberg/subtle-swift/actions/workflows/swift.yml/badge.svg)](
+https://github.com/nixberg/subtle-swift/actions/workflows/swift.yml)
 
 # subtle-swift
 

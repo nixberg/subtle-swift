@@ -1,6 +1,8 @@
 import Subtle
 import XCTest
 
+fileprivate typealias IntExhaustive = Int8
+
 fileprivate typealias UIntExhaustive = UInt8
 
 final class ConstantTimeEquatableTests: XCTestCase {
@@ -9,6 +11,22 @@ final class ConstantTimeEquatableTests: XCTestCase {
         XCTAssertEqual(.true  == .false, .false)
         XCTAssertEqual(.false == .true,  .false)
         XCTAssertEqual(.false == .false, .true )
+    }
+    
+    func testEqualToIntExhaustive() {
+        for lhs in IntExhaustive.min...IntExhaustive.max {
+            for rhs in IntExhaustive.min...IntExhaustive.max {
+                XCTAssertEqual(Bool(Choice(lhs == rhs)), lhs == rhs)
+            }
+        }
+    }
+    
+    func testNotEqualToIntExhaustive() {
+        for lhs in IntExhaustive.min...IntExhaustive.max {
+            for rhs in IntExhaustive.min...IntExhaustive.max {
+                XCTAssertEqual(Bool(Choice(lhs != rhs)), lhs != rhs)
+            }
+        }
     }
     
     func testEqualToUIntExhaustive() {

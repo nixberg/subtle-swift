@@ -4,16 +4,16 @@ public protocol ConditionallyNegatable {
     mutating func negate(if choice: Choice)
 }
 
-public extension ConditionallyNegatable {
+extension ConditionallyNegatable {
     @inline(__always)
-    mutating func negate(if choice: Choice) {
+    public mutating func negate(if choice: Choice) {
         self = self.negated(if: choice)
     }
 }
 
-public extension FixedWidthInteger where Self: UnsignedInteger {
+extension FixedWidthInteger where Self: UnsignedInteger {
     @inline(__always)
-    func negated(if choice: Choice) -> Self {
+    public func negated(if choice: Choice) -> Self {
         self.replaced(with: 0 &- self, if: choice)
     }
 }

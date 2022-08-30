@@ -32,9 +32,9 @@ extension Choice: ConditionallyReplaceable {
     }
 }
 
-public extension FixedWidthInteger where Self: UnsignedInteger {
+extension FixedWidthInteger where Self: UnsignedInteger {
     @inline(__always)
-    func replaced(with other: Self, if choice: Choice) -> Self {
+    public func replaced(with other: Self, if choice: Choice) -> Self {
         let mask = Self(maskFrom: choice)
         return (self & ~mask) | (other & mask)
     }

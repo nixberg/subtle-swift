@@ -10,7 +10,7 @@ public extension FixedWidthInteger where Self: UnsignedInteger {
         result |= lhs ^ rhs
         result ^= lhs
         result >>= Self.bitWidth - 1
-        return Choice(uncheckedRawValue: UInt8(truncatingIfNeeded: result))
+        return Choice(uncheckedRawValue: .init(truncatingIfNeeded: result))
     }
 }
 

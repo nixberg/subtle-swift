@@ -44,9 +44,9 @@ public struct Choice {
     }
 }
 
-public extension Bool {
+extension Bool {
     @inline(__always)
-    init(_ source: Choice) {
+    public init(_ source: Choice) {
         self = (source.rawValue == Choice.true.rawValue)
     }
 }
@@ -57,4 +57,3 @@ extension FixedWidthInteger where Self: UnsignedInteger {
         self = 0 &- Self(truncatingIfNeeded: choice.rawValue)
     }
 }
-

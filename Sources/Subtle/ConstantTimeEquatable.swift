@@ -16,20 +16,28 @@ extension Choice: ConstantTimeEquatable {
     }
 }
 
-public extension FixedWidthInteger where Self: UnsignedInteger {
+extension FixedWidthInteger {
     @inline(__always)
-    static func == (lhs: Self, rhs: Self) -> Choice {
+    public static func == (lhs: Self, rhs: Self) -> Choice {
         !(lhs != rhs)
     }
     
     @inline(__always)
-    static func != (lhs: Self, rhs: Self) -> Choice {
+    public static func != (lhs: Self, rhs: Self) -> Choice {
+        let lhs = Magnitude(truncatingIfNeeded: lhs)
+        let rhs = Magnitude(truncatingIfNeeded: rhs)
         var result = lhs ^ rhs
         result |= 0 &- result
-        result >>= Self.bitWidth - 1
-        return Choice(uncheckedRawValue: UInt8(truncatingIfNeeded: result))
+        result >>= Magnitude.bitWidth - 1
+        return Choice(uncheckedRawValue: .init(truncatingIfNeeded: result))
     }
 }
+
+extension Int:   ConstantTimeEquatable {}
+extension Int8:  ConstantTimeEquatable {}
+extension Int16: ConstantTimeEquatable {}
+extension Int32: ConstantTimeEquatable {}
+extension Int64: ConstantTimeEquatable {}
 
 extension UInt:   ConstantTimeEquatable {}
 extension UInt8:  ConstantTimeEquatable {}
@@ -37,8 +45,8 @@ extension UInt16: ConstantTimeEquatable {}
 extension UInt32: ConstantTimeEquatable {}
 extension UInt64: ConstantTimeEquatable {}
 
-public extension Sequence where Element: ConstantTimeEquatable {
-    static func == (lhs: Self, rhs: Self) -> Choice {
+extension Sequence where Element: ConstantTimeEquatable {
+    public static func == (lhs: Self, rhs: Self) -> Choice {
         var lhs = lhs.makeIterator()
         var rhs = rhs.makeIterator()
         
@@ -59,19 +67,47 @@ public extension Sequence where Element: ConstantTimeEquatable {
     }
     
     @inline(__always)
-    static func != (lhs: Self, rhs: Self) -> Choice {
+    public static func != (lhs: Self, rhs: Self) -> Choice {
         !(lhs == rhs)
     }
 }
 
-public extension RandomAccessCollection where Element: ConstantTimeEquatable {
-    static func == (lhs: Self, rhs: Self) -> Choice {
+extension RandomAccessCollection where Element: ConstantTimeEquatable {
+    public static func == (lhs: Self, rhs: Self) -> Choice {
         precondition(lhs.count == rhs.count)
         return zip(lhs, rhs).map(==).reduce(.true, &&)
     }
     
     @inline(__always)
-    static func != (lhs: Self, rhs: Self) -> Choice {
+    public static func != (lhs: Self, rhs: Self) -> Choice {
         !(lhs == rhs)
     }
 }
+
+extension Array: ConstantTimeEquatable where Element: ConstantTimeEquatable {}
+
+extension ArraySlice: ConstantTimeEquatable where Element: ConstantTimeEquatable {}
+
+extension ContiguousArray: ConstantTimeEquatable where Element: ConstantTimeEquatable {}
+
+extension Slice: ConstantTimeEquatable where Base: Sequence, Base.Element: ConstantTimeEquatable {}
+
+extension UnsafeMutablePointer: ConstantTimeEquatable where Pointee: ConstantTimeEquatable {
+    @inline(__always)
+    public static func == (lhs: Self, rhs: Self) -> Choice {
+        lhs.pointee == rhs.pointee
+    }
+    
+    @inline(__always)
+    public static func != (lhs: Self, rhs: Self) -> Choice {
+        !(lhs == rhs)
+    }
+}
+
+extension UnsafeBufferPointer: ConstantTimeEquatable where Element: ConstantTimeEquatable {}
+
+extension UnsafeMutableBufferPointer: ConstantTimeEquatable where Element: ConstantTimeEquatable {}
+
+extension UnsafeRawBufferPointer: ConstantTimeEquatable {}
+
+extension UnsafeMutableRawBufferPointer: ConstantTimeEquatable {}
